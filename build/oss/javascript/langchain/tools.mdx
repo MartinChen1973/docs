@@ -48,28 +48,9 @@ const searchDatabase = tool(
 **Why this matters:** Tools are most powerful when they can access agent state, runtime context, and long-term memory. This enables tools to make context-aware decisions, personalize responses, and maintain information across conversations.
 </Info>
 
-Tools can access runtime information through the `ToolRuntime` parameter, which provides:
-
-- **State** - Mutable data that flows through execution (messages, counters, custom fields)
-- **Context** - Immutable configuration like user IDs, session details, or application-specific configuration
-- **Store** - Persistent long-term memory across conversations
-- **Stream Writer** - Stream custom updates as tools execute
-- **Config** - RunnableConfig for the execution
-- **Tool Call ID** - ID of the current tool call
-
-### ToolRuntime
-
-Use `ToolRuntime` to access all runtime information in a single parameter. Simply add `runtime: ToolRuntime` to your tool signature, and it will be automatically injected without being exposed to the LLM.
-
-<Info>
-**`ToolRuntime`**: A unified parameter that provides tools access to state, context, store, streaming, config, and tool call ID. This replaces the older pattern of using separate @[`InjectedState`], @[`InjectedStore`], @[`get_runtime`], and @[`InjectedToolCallId`] annotations.
-</Info>
-
 
 
 #### Context
-
-Access immutable configuration and contextual data like user IDs, session details, or application-specific configuration through `runtime.context`.
 
 
 
@@ -114,9 +95,9 @@ const result = await agent.invoke(
 
 #### Memory (Store)
 
-Access persistent data across conversations using the store. The store is accessed via `runtime.store` and allows you to save and retrieve user-specific or application-specific data.
 
 
+Access persistent data across conversations using the store. The store is accessed via `config.store` and allows you to save and retrieve user-specific or application-specific data.
 
 ```ts wrap expandable
 import * as z from "zod";
@@ -194,9 +175,9 @@ console.log(result);
 
 #### Stream Writer
 
-Stream custom updates from tools as they execute using `runtime.stream_writer`. This is useful for providing real-time feedback to users about what a tool is doing.
 
 
+Stream custom updates from tools as they execute using `config.streamWriter`. This is useful for providing real-time feedback to users about what a tool is doing.
 
 ```ts wrap
 import * as z from "zod";
