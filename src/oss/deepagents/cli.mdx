@@ -26,6 +26,12 @@ Set your API key:
 export ANTHROPIC_API_KEY="your-api-key"
 ```
 
+Or create a `.env` file in your project root:
+
+```bash
+ANTHROPIC_API_KEY=your-api-key
+```
+
 Run the CLI:
 
 ```bash
@@ -37,6 +43,8 @@ Give the agent a task:
 ```bash
 > Create a Python script that prints "Hello, World!"
 ```
+
+The agent proposes changes with diffs for your approval before modifying files.
 
 <Accordion title="Installation and configuration">
 Install locally if needed:
@@ -56,22 +64,49 @@ Enable web search (optional):
 ```bash
 export TAVILY_API_KEY="your-key"
 ```
+
+API keys can be set as environment variables or in a `.env` file.
 </Accordion>
 
 ## Built-in capabilities
-
-The CLI provides these tools to agents:
-- File operations (read, write, edit)
-- Shell command execution
-- Web search (requires Tavily API key)
-- HTTP requests
-- Task planning and tracking
-- Memory storage and retrieval
+<Columns cols={3}>
+<Card title="File operations" icon="file">
+    Read, write, and edit files in your project with tools that enable agents to manage and modify code and documentation.
+</Card>
+<Card title="Shell command execution" icon="terminal">
+    Execute shell commands to run tests, build projects, manage dependencies, and interact with version control systems.
+</Card>
+<Card title="Web search" icon="magnifying-glass">
+    Search the web for up-to-date information and documentation (requires Tavily API key).
+</Card>
+<Card title="HTTP requests" icon="globe">
+    Make HTTP requests to APIs and external services for data fetching and integration tasks.
+</Card>
+<Card title="Task planning and tracking" icon="list-check">
+    Break down complex tasks into discrete steps and track progress through the built-in todo system.
+</Card>
+<Card title="Memory storage and retrieval" icon="brain">
+    Store and retrieve information across sessions, enabling agents to remember project conventions and learned patterns.
+</Card>
+</Columns>
 
 
 ## Persistent memory
 
-Agents store information in `~/.deepagents/AGENT_NAME/memories/` as markdown files. The agent searches these files before responding and saves new information automatically.
+Agents store information in `~/.deepagents/AGENT_NAME/memories/` as markdown files using a memory-first protocol:
+
+1. **Research**: Searches memory for relevant context before starting tasks
+2. **Response**: Checks memory when uncertain during execution
+3. **Learning**: Automatically saves new information for future sessions
+
+Organize memories by topic with descriptive filenames:
+
+```
+~/.deepagents/backend-dev/memories/
+├── api-conventions.md
+├── database-schema.md
+└── deployment-process.md
+```
 
 Teach the agent conventions once:
 
@@ -87,6 +122,66 @@ It remembers for future sessions:
 # Applies conventions without prompting
 ```
 
+## Remote sandboxes
+
+Execute code in isolated remote environments for safety and flexibility. Supported providers: [Runloop](https://www.runloop.ai/), [Daytona](https://www.daytona.io/), and [Modal](https://modal.com/).
+
+**Use cases:**
+- **Safety**: Protect your local machine from potentially harmful code execution
+- **Clean environments**: Use specific dependencies or OS configurations without local setup
+- **Parallel execution**: Run multiple agents simultaneously in isolated environments
+- **Long-running tasks**: Execute time-intensive operations without blocking your machine
+- **Reproducibility**: Ensure consistent execution environments across teams
+
+### Setup
+
+Configure your sandbox provider:
+
+```bash
+# Runloop
+export RUNLOOP_API_KEY="your-key"
+
+# Daytona
+export DAYTONA_API_KEY="your-key"
+
+# Modal
+modal setup
+```
+
+Run the CLI with a sandbox:
+
+```bash
+uvx deepagents-cli --sandbox runloop --sandbox-setup ./setup.sh
+```
+
+The agent runs locally but executes all code operations in the remote sandbox. Optional setup scripts can configure environment variables, clone repositories, and prepare dependencies.
+
+<Accordion title="Setup script example">
+Create a `setup.sh` file to configure your sandbox environment:
+
+```bash
+#!/bin/bash
+set -e
+
+# Clone repository using GitHub token
+git clone https://x-access-token:${GITHUB_TOKEN}@github.com/username/repo.git $HOME/workspace
+cd $HOME/workspace
+
+# Make environment variables persistent
+cat >> ~/.bashrc <<'EOF'
+export GITHUB_TOKEN="${GITHUB_TOKEN}"
+export OPENAI_API_KEY="${OPENAI_API_KEY}"
+cd $HOME/workspace
+EOF
+
+source ~/.bashrc
+```
+
+Store secrets in a local `.env` file for the setup script to access.
+</Accordion>
+
+**Security**: Sandboxes isolate code execution, but agents remain vulnerable to prompt injection with untrusted inputs. Use human-in-the-loop approval, short-lived secrets, and trusted setup scripts only.
+
 ## Configuration
 
 ### Options
@@ -101,12 +196,12 @@ It remembers for future sessions:
 
 ### Commands
 
-| Command                              | Description                    |
-|--------------------------------------|--------------------------------|
-| `list`                               | List all agents                |
-| `help`                               | Show help                      |
-| `reset --agent NAME`                 | Clear agent memory             |
-| `reset --agent NAME --target SOURCE` | Copy memory from another agent |
+| Command                              | Description                            |
+|--------------------------------------|----------------------------------------|
+| `deepagents list`                    | List all agents                        |
+| `deepagents help`                    | Show help                              |
+| `deepagents reset --agent NAME`      | Clear agent memory and reset to default|
+| `deepagents reset --agent NAME --target SOURCE` | Copy memory from another agent |
 
 ## Interactive mode
 
