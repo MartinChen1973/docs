@@ -42,9 +42,10 @@ Middleware exposes hooks before and after each of those steps:
     </Card>
 </CardGroup>
 
+:::python
 Add middleware by passing them to @[`create_agent`]:
 
-:::python
+
 ```python
 from langchain.agents import create_agent
 from langchain.agents.middleware import SummarizationMiddleware, HumanInTheLoopMiddleware
@@ -61,6 +62,8 @@ agent = create_agent(
 :::
 
 :::js
+Add middleware by passing them to `createAgent`:
+
 ```typescript
 import {
   createAgent,

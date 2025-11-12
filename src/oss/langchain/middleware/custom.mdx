@@ -235,10 +235,14 @@ Quick and simple for single-hook middleware. Use decorators to wrap individual f
 **Available decorators:**
 
 **Node-style:**
-- `@before_agent`, @[`@before_model`], @[`@after_model`], `@after_agent`
+- @[`@before_agent`] - Runs before agent starts (once per invocation)
+- @[`@before_model`] - Runs before each model call
+- @[`@after_model`] - Runs after each model response
+- @[`@after_agent`] - Runs after agent completes (once per invocation)
 
 **Wrap-style:**
-- @[`@wrap_model_call`], @[`@wrap_tool_call`]
+- @[`@wrap_model_call`] - Wraps each model call with custom logic
+- @[`@wrap_tool_call`] - Wraps each tool call with custom logic
 
 **Convenience:**
 - @[`@dynamic_prompt`] - Generates dynamic system prompts
@@ -346,6 +350,48 @@ Middleware can extend the agent's state with custom properties.
 
 :::python
 
+<Tabs>
+<Tab title="Decorator">
+
+```python
+from langchain.agents.middleware import AgentState, before_model, after_model
+from typing_extensions import NotRequired
+from typing import Any
+from langgraph.runtime import Runtime
+
+class CustomState(AgentState):
+    model_call_count: NotRequired[int]
+    user_id: NotRequired[str]
+
+@before_model(state_schema=CustomState)
+def check_call_limit(state: CustomState, runtime: Runtime) -> dict[str, Any] | None:
+    count = state.get("model_call_count", 0)
+    if count > 10:
+        return {"jump_to": "end"}
+    return None
+
+@after_model(state_schema=CustomState)
+def increment_counter(state: CustomState, runtime: Runtime) -> dict[str, Any] | None:
+    return {"model_call_count": state.get("model_call_count", 0) + 1}
+
+agent = create_agent(
+    model="gpt-4o",
+    middleware=[check_call_limit, increment_counter],
+    tools=[...],
+)
+
+# Invoke with custom state
+result = agent.invoke({
+    "messages": [HumanMessage("Hello")],
+    "model_call_count": 0,
+    "user_id": "user-123",
+})
+```
+
+</Tab>
+
+<Tab title="Class">
+
 ```python
 from langchain.agents.middleware import AgentState, AgentMiddleware
 from typing_extensions import NotRequired
@@ -380,6 +426,9 @@ result = agent.invoke({
     "user_id": "user-123",
 })
 ```
+
+</Tab>
+</Tabs>
 
 :::
 
