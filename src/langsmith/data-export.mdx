@@ -182,6 +182,10 @@ Use the returned `id` to reference this export in subsequent bulk export operati
 
 #### Limiting exported fields
 
+<Note>
+Requires LangSmith Helm version >= `0.12.11` (application version >= `0.12.42`). This feature **is supported** in scheduled bulk exports and standard bulk exports.
+</Note>
+
 You can improve bulk export speed and reduce row size by limiting which fields are included in the exported Parquet files using the `export_fields` parameter. When `export_fields` is provided, only the specified fields are exported as columns in the Parquet files. When `export_fields` is not provided, all exportable fields are included.
 
 This is particularly useful when you want to exclude larger fields like `inputs` and `outputs`.
