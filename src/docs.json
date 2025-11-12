@@ -268,7 +268,6 @@
                       "group": "Get started",
                       "pages": [
                         "oss/python/deepagents/quickstart",
-                        "oss/python/deepagents/cli",
                         "oss/python/deepagents/customization"
                       ]
                     },
@@ -281,6 +280,12 @@
                         "oss/python/deepagents/human-in-the-loop",
                         "oss/python/deepagents/long-term-memory",
                         "oss/python/deepagents/middleware"
+                      ]
+                    },
+                    {
+                      "group": "Deep Agents CLI",
+                      "pages": [
+                        "oss/python/deepagents/cli"
                       ]
                     }
                   ]
@@ -590,7 +595,6 @@
                       "group": "Get started",
                       "pages": [
                         "oss/javascript/deepagents/quickstart",
-                        "oss/javascript/deepagents/cli",
                         "oss/javascript/deepagents/customization"
                       ]
                     },
@@ -603,6 +607,12 @@
                         "oss/javascript/deepagents/human-in-the-loop",
                         "oss/javascript/deepagents/long-term-memory",
                         "oss/javascript/deepagents/middleware"
+                      ]
+                    },
+                    {
+                      "group": "Deep Agents CLI",
+                      "pages": [
+                        "oss/javascript/deepagents/cli"
                       ]
                     }
                   ]
