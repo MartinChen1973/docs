@@ -76,9 +76,9 @@ Pairwise queues are designed for fast A/B comparisons between two experiments (o
     - **Collaborator settings** (reviewer count, reservations, reservation length)
 1. Submit the form to create the queue. LangSmith immediately pairs runs from the two experiments and populates the queue; there is no separate populate step.
 
-    ![Popover showing the “Add to Pairwise Annotation Queue” card highlighted after two experiments are selected.](/langsmith/images/pairwise-annotation-queue-popover.png)
+    ![Popover showing the “Add to Pairwise Annotation Queue” card highlighted after two experiments are selected.](/langsmith/images/pairwise-annotation-queue-popup.png)
 
-    ![Pairwise creation pane.](/langsmith/images/pairwise-create-form.png)
+    ![Pairwise creation pane.](/langsmith/images/pairwise-annotation-queue-create-form.png)
 
 Key differences for PAQs:
 
@@ -87,7 +87,7 @@ Key differences for PAQs:
 - **Dataset**: Pairwise queues do not use a default dataset, because comparisons span two experiments.
 - **Reservations & reviewers**: The same collaborator controls apply. Reservations help prevent two people from judging the same comparison simultaneously.
 
-If you prefer to populate a PAQ later or via automation, you can create an empty queue under **Annotation queues** → **Pairwise** and use automation rules (see below) to add comparisons incrementally.
+If you prefer to populate a PAQ later or via automation, you can create an empty queue under **Annotation queues** → **Pairwise** and [use automation rules](/langsmith/rules) to add comparisons incrementally.
 
 ## Assign runs to an annotation queue
 
