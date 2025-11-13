@@ -38,7 +38,7 @@ In the [LangSmith UI](https://smith.langchain.com/), single-run queues can be cr
 
     ![The rendered rubric for reviewers from the example instructions.](/langsmith/images/rubric-for-annotators.png)
 
-#### Collaborator Settings (single-run)
+#### Collaborator Settings
 
 When there are multiple annotators for a run:
 
@@ -69,14 +69,13 @@ Pairwise queues are designed for fast A/B comparisons between two experiments (o
 
 1. Navigate to **Datasets & Experiments**, open a dataset, and select **exactly two experiments** you want to compare.
 1. Click **Annotate**. In the popover, choose **Add to Pairwise Annotation Queue**. (The button is disabled until exactly two experiments are selected.)
+    ![Popover showing the “Add to Pairwise Annotation Queue” card highlighted after two experiments are selected.](/langsmith/images/pairwise-annotation-queue-popup.png)
 1. Decide whether to send the experiments to an existing pairwise queue or create a new one.
 1. Provide the queue details:
     - **Basic details** (name and description)
     - **Instructions & rubrics** tailored to pairwise scoring
     - **Collaborator settings** (reviewer count, reservations, reservation length)
 1. Submit the form to create the queue. LangSmith immediately pairs runs from the two experiments and populates the queue.
-
-    ![Popover showing the “Add to Pairwise Annotation Queue” card highlighted after two experiments are selected.](/langsmith/images/pairwise-annotation-queue-popup.png)
 
 Key differences for PAQs:
 
