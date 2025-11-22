@@ -2876,6 +2876,28 @@ agent = create_agent(
 )
 ```
 :::
+:::js
+**API reference:** @[`openAIModerationMiddleware`]
+
+```typescript
+import { createAgent, openAIModerationMiddleware } from "langchain";
+import { ChatOpenAI } from "@langchain/openai";
+
+const model = new ChatOpenAI({ model: "gpt-4o" });
+
+const agent = createAgent({
+  model,
+  tools: [search_tool, customer_data_tool],
+  middleware: [openAIModerationMiddleware({
+    model,
+    moderationModel: "omni-moderation-latest",
+    checkInput: true,
+    checkOutput: true,
+    exitBehavior: "end",
+  })],
+});
+```
+:::
 
 <Accordion title="Configuration options">
 
@@ -2923,12 +2945,52 @@ agent = create_agent(
 </ParamField>
 :::
 
+:::js
+<ParamField body="model" type="ChatOpenAI">
+    OpenAI model to use.
+</ParamField>
+
+<ParamField body="moderationModel" type="string">
+    OpenAI moderation model to use. Options: `'omni-moderation-latest'`, `'omni-moderation-2024-09-26'`, `'text-moderation-latest'`, `'text-moderation-stable'`
+</ParamField>
+
+<ParamField body="checkInput" type="boolean" default="true">
+    Whether to check user input messages before the model is called
+</ParamField>
+
+<ParamField body="checkOutput" type="boolean" default="true">
+    Whether to check model output messages after the model is called
+</ParamField>
+
+<ParamField body="checkToolResults" type="boolean" default="false">
+    Whether to check tool result messages before the model is called
+</ParamField>
+
+<ParamField body="exitBehavior" type="string" default="end">
+    How to handle violations when content is flagged. Options:
+
+    - `'end'` - End agent execution immediately with a violation message
+    - `'error'` - Raise `OpenAIModerationError` exception
+    - `'replace'` - Replace the flagged content with the violation message and continue
+</ParamField>
+
+<ParamField body="violationMessage" type="string | null">
+    Custom template for violation messages. Supports template variables:
+
+    - `{categories}` - Comma-separated list of flagged categories
+    - `{category_scores}` - JSON string of category scores
+    - `{original_content}` - The original flagged content
+
+    Default: `"I'm sorry, but I can't comply with that request. It was flagged for {categories}."`
+</ParamField>
+:::
 </Accordion>
 
 <Accordion title="Full example">
 
 The middleware integrates OpenAI's moderation endpoint to check content at different stages:
 
+:::python
 **Moderation stages:**
 - `check_input` - User messages before model call
 - `check_output` - AI messages after model call
@@ -2939,7 +3001,6 @@ The middleware integrates OpenAI's moderation endpoint to check content at diffe
 - `'error'` - Raise exception for application handling
 - `'replace'` - Replace flagged content and continue
 
-:::python
 ```python
 from langchain_openai import ChatOpenAI
 from langchain_openai.middleware import OpenAIModerationMiddleware
@@ -2992,5 +3053,70 @@ agent_replace = create_agent(
 )
 ```
 :::
+:::js
+**Moderation stages:**
+- `checkInput` - User messages before model call
+- `checkOutput` - AI messages after model call
+- `checkToolResults` - Tool outputs before model call
 
+**Exit behaviors:**
+- `'end'` (default) - Stop execution with violation message
+- `'error'` - Raise exception for application handling
+- `'replace'` - Replace flagged content and continue
+
+```typescript
+import { createAgent, openAIModerationMiddleware } from "langchain";
+import { ChatOpenAI } from "@langchain/openai";
+
+const model = new ChatOpenAI({ model: "gpt-4o" });
+
+// Basic moderation
+const agent = createAgent({
+  model,
+  tools: [searchTool, customerDataTool],
+  middleware: [
+    openAIModerationMiddleware({
+      model,
+      moderationModel: "omni-moderation-latest",
+      checkInput: true,
+      checkOutput: true,
+    }),
+  ],
+});
+
+// Strict moderation with custom message
+const agentStrict = createAgent({
+  model,
+  tools: [searchTool, customerDataTool],
+  middleware: [
+    openAIModerationMiddleware({
+      model,
+      moderationModel: "omni-moderation-latest",
+      checkInput: true,
+      checkOutput: true,
+      checkToolResults: true,
+      exitBehavior: "error",
+      violationMessage:
+        "Content policy violation detected: {categories}. " +
+        "Please rephrase your request.",
+    }),
+  ],
+});
+
+// Moderation with replacement behavior
+const agentReplace = createAgent({
+  model,
+  tools: [searchTool],
+  middleware: [
+    openAIModerationMiddleware({
+      model,
+      checkInput: true,
+      exitBehavior: "replace",
+      violationMessage: "[Content removed due to safety policies]",
+    }),
+  ],
+});
+```
+
+:::
 </Accordion>
