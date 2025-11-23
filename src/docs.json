@@ -158,7 +158,8 @@
                       "pages": [
                         "oss/python/langchain/install",
                         "oss/python/langchain/quickstart",
-                        "oss/python/langchain/philosophy"
+                        "oss/python/langchain/philosophy",
+                        "oss/python/langchain/getting-help"
                       ]
                     },
                     {
@@ -501,7 +502,8 @@
                       "pages": [
                         "oss/javascript/langchain/install",
                         "oss/javascript/langchain/quickstart",
-                        "oss/javascript/langchain/philosophy"
+                        "oss/javascript/langchain/philosophy",
+                        "oss/javascript/langchain/getting-help"
                       ]
                     },
                     {
