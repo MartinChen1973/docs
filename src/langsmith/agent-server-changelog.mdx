@@ -99,6 +99,21 @@ sidebarTitle: Agent Server changelog
 This minor version now requires langgraph-checkpoint versions later than 3.0 to prevent a deserialization vulnerability in earlier versions of the langgraph-checkpoint library.
 The `langgraph-checkpoint` library is compatible with `langgraph` minor versions 0.4, 0.5, 0.6, and 1.0.
 
+This version removes default support for deserialization of payloads saved using the "json" type, which has never been the default.
+By default, objects are serialized using msgpack. Under certain uncommon situations, payloads were serialized using an older "json" mode. If those payloads contained custom python objects, those will no longer be deserializable unless you provide a `serde` config:
+
+```json
+{
+    "checkpointer": {
+        "serde": {
+            "allowed_json_modules": [
+                ["my_agent", "my_file", "SomeType"],
+            ]
+        }
+    }
+}
+```
+
 <a id="2025-10-29"></a>
 ## v0.4.47
 - Validated and auto-corrected environment configuration types using TypeAdapter.
