@@ -42,17 +42,17 @@ LangSmith supports two types of evaluations based on when and where they run:
   <Step title="Define evaluators">
     Create <Tooltip tip="Functions that score how well your application performs">[evaluators](/langsmith/evaluation-concepts#evaluators)</Tooltip> to score performance:
     - [Human](/langsmith/evaluation-concepts#human) review
-    - [Heuristic](/langsmith/evaluation-concepts#heuristic) rules
+    - [Code](/langsmith/evaluation-concepts#code) rules
     - [LLM-as-judge](/langsmith/llm-as-judge)
     - [Pairwise](/langsmith/evaluate-pairwise) comparison
   </Step>
 
   <Step title="Run an experiment">
-    Execute your application on the dataset to create an <Tooltip tip="Results of evaluating a specific application version on a dataset">[experiment](/langsmith/evaluation-concepts#experiment)</Tooltip>. Configure [repetitions, concurrency, and caching](/langsmith/evaluation-concepts#experiment-configuration) to optimize runs.
+    Execute your application on the dataset to create an <Tooltip tip="Results of evaluating a specific application version on a dataset">[experiment](/langsmith/evaluation-concepts#experiment)</Tooltip>. Configure [repetitions, concurrency, and caching](/langsmith/experiment-configuration) to optimize runs.
   </Step>
 
   <Step title="Analyze results">
-    Compare experiments for [benchmarking](/langsmith/evaluation-concepts#benchmarking), [unit tests](/langsmith/evaluation-concepts#unit-tests), [regression tests](/langsmith/evaluation-concepts#regression-tests), or [backtesting](/langsmith/evaluation-concepts#backtesting).
+    Compare experiments for [benchmarking](/langsmith/evaluation-types#benchmarking), [unit tests](/langsmith/evaluation-types#unit-tests), [regression tests](/langsmith/evaluation-types#regression-tests), or [backtesting](/langsmith/evaluation-types#backtesting).
   </Step>
 </Steps>
 
@@ -62,7 +62,7 @@ LangSmith supports two types of evaluations based on when and where they run:
 
 <Steps>
   <Step title="Deploy your application">
-    Each interaction creates a <Tooltip tip="A single execution trace including inputs, outputs, and intermediate steps">[run](/langsmith/evaluation-concepts#runs-for-online-evaluation)</Tooltip> without reference outputs.
+    Each interaction creates a <Tooltip tip="A single execution trace including inputs, outputs, and intermediate steps">[run](/langsmith/evaluation-concepts#runs)</Tooltip> without reference outputs.
   </Step>
 
   <Step title="Configure online evaluators">
@@ -70,7 +70,7 @@ LangSmith supports two types of evaluations based on when and where they run:
   </Step>
 
   <Step title="Monitor in real-time">
-    Evaluators run automatically on [runs](/langsmith/evaluation-concepts#runs-for-online-evaluation) or <Tooltip tip="Collections of related runs forming multi-turn conversations">[threads](/langsmith/online-evaluations#configure-multi-turn-online-evaluators)</Tooltip>, providing real-time monitoring, anomaly detection, and alerting.
+    Evaluators run automatically on [runs](/langsmith/evaluation-concepts#runs) or <Tooltip tip="Collections of related runs forming multi-turn conversations">[threads](/langsmith/online-evaluations#configure-multi-turn-online-evaluators)</Tooltip>, providing real-time monitoring, anomaly detection, and alerting.
   </Step>
 
   <Step title="Establish a feedback loop">
@@ -82,7 +82,7 @@ LangSmith supports two types of evaluations based on when and where they run:
 </Tabs>
 
 <Tip>
-For more on the differences between offline and online evaluation, refer to the [Evaluation concepts](/langsmith/evaluation-concepts#offline-vs-online-evaluation-quick-comparison) page.
+For more on the differences between offline and online evaluation, refer to the [Evaluation concepts](/langsmith/evaluation-concepts#quick-reference-offline-vs-online-evaluation) page.
 </Tip>
 
 ## Get started

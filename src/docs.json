@@ -1074,6 +1074,7 @@
                     {
                       "group": "Evaluation types",
                       "pages": [
+                        "langsmith/evaluation-types",
                         "langsmith/code-evaluator",
                         "langsmith/llm-as-judge",
                         "langsmith/composite-evaluators",
@@ -1093,6 +1094,7 @@
                     {
                       "group": "Evaluation techniques",
                       "pages": [
+                        "langsmith/experiment-configuration",
                         "langsmith/define-target-function",
                         "langsmith/evaluate-on-intermediate-steps",
                         "langsmith/multiple-scores",
