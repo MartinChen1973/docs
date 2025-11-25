@@ -879,7 +879,14 @@
                       "group": "API reference for LangSmith Deployment",
                       "pages": [
                         "langsmith/server-api-ref",
-                        "langsmith/api-ref-control-plane"
+                        "langsmith/api-ref-control-plane",
+                        {
+                          "group": "Agent Server API",
+                          "openapi": {
+                            "source": "langsmith/openapi.json",
+                            "directory": "langsmith/agent-server-api"
+                          }
+                        }
                       ]
                     }
                   ]
