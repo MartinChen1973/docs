@@ -123,28 +123,28 @@ import OpenAI from "openai";
 
 // Minimal example retriever
 function retriever(query: string): string[] {
-  return ["Harrison worked at Kensho"];
+    return ["Harrison worked at Kensho"];
 }
 
 // OpenAI client call (no wrapping yet)
 const client = new OpenAI();
 
 async function rag(question: string) {
-  const docs = retriever(question);
-  const systemMessage =
+    const docs = retriever(question);
+    const systemMessage =
     "Answer the user's question using only the provided information below:\n" +
     docs.join("\n");
 
-  // This call is not traced yet
-  const resp = await client.chat.completions.create({
-    model: "gpt-4o-mini",
-    messages: [
-      { role: "system", content: systemMessage },
-      { role: "user", content: question },
-    ],
-  });
+    // This call is not traced yet
+    const resp = await client.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+            { role: "system", content: systemMessage },
+            { role: "user", content: question },
+        ],
+    });
 
-  return resp.choices[0].message?.content;
+    return resp.choices[0].message?.content;
 }
 
 (async () => {
