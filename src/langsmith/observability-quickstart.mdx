@@ -132,8 +132,8 @@ const client = new OpenAI();
 async function rag(question: string) {
     const docs = retriever(question);
     const systemMessage =
-    "Answer the user's question using only the provided information below:\n" +
-    docs.join("\n");
+        "Answer the user's question using only the provided information below:\n" +
+        docs.join("\n");
 
     // This call is not traced yet
     const resp = await client.chat.completions.create({
