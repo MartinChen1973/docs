@@ -1,7 +1,14 @@
 ---
-title: Weaviate - LangChain Integration Reference
+title: Weaviate
 ---
 
 # `langchain-weaviate`
 
-This package ref has not yet been migrated to v1. See the [old ref](https://python.langchain.com/api_reference/weaviate/index.html).
+[![PyPI - Version](https://img.shields.io/pypi/v/langchain-weaviate?label=%20)](https://pypi.org/project/langchain-weaviate/#history)
+[![PyPI - License](https://img.shields.io/pypi/l/langchain-weaviate)](https://opensource.org/licenses/MIT)
+[![PyPI - Downloads](https://img.shields.io/pepy/dt/langchain-weaviate)](https://pypistats.org/packages/langchain-weaviate)
+
+!!! warning "Reference docs"
+    This page contains **reference documentation** for Weaviate. See [the docs](https://docs.langchain.com/oss/python/integrations/providers/weaviate) for conceptual guides, tutorials, and examples on using Weaviate modules.
+
+::: langchain_weaviate

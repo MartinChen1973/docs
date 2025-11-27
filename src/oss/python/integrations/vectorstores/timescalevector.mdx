@@ -36,9 +36,9 @@ Follow these steps to get ready to follow this tutorial.
 
 ```python
 # Pip install necessary packages
-%pip install -qU  timescale-vector
-%pip install -qU  langchain-openai langchain-community
-%pip install -qU  tiktoken
+pip install -qU  timescale-vector
+pip install -qU  langchain-openai langchain-community
+pip install -qU  tiktoken
 ```
 
 In this example, we'll use `OpenAIEmbeddings`, so let's load your OpenAI API key.
@@ -789,7 +789,7 @@ Next we'll create our self-querying retriever. To do this we'll need to provide 
 
 ```python
 from langchain.chains.query_constructor.base import AttributeInfo
-from langchain.retrievers.self_query.base import SelfQueryRetriever
+from langchain_classic.retrievers.self_query.base import SelfQueryRetriever
 from langchain_openai import OpenAI
 
 # Give LLM info about the metadata fields

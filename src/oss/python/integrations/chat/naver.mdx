@@ -52,8 +52,8 @@ if not os.getenv("CLOVASTUDIO_API_KEY"):
 To enable automated tracing of your model calls, set your [LangSmith](https://docs.smith.langchain.com/) API key:
 
 ```python
-# os.environ["LANGSMITH_TRACING"] = "true"
-# os.environ["LANGSMITH_API_KEY"] = getpass.getpass("Enter your LangSmith API key: ")
+os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_API_KEY"] = getpass.getpass("Enter your LangSmith API key: ")
 ```
 
 ### Installation
@@ -62,7 +62,7 @@ The LangChain Naver integration lives in the `langchain-naver` package:
 
 ```python
 # install package
-%pip install -qU langchain-naver
+pip install -qU langchain-naver
 ```
 
 ## Instantiation
@@ -323,6 +323,8 @@ fine_tuned_model.invoke(messages)
 ```output
 AIMessage(content='네이버 인공지능을 사용하는 것을 정말 좋아합니다.', additional_kwargs={'refusal': None}, response_metadata={'token_usage': {'completion_tokens': 11, 'prompt_tokens': 28, 'total_tokens': 39, 'completion_tokens_details': None, 'prompt_tokens_details': None}, 'model_name': 'HCX-005', 'system_fingerprint': None, 'id': '2222d6d411a948c883aac1e03ca6cebe', 'finish_reason': 'stop', 'logprobs': None}, id='run-9696d7e2-7afa-4bb4-9c03-b95fcf678ab8-0', usage_metadata={'input_tokens': 28, 'output_tokens': 11, 'total_tokens': 39, 'input_token_details': {}, 'output_token_details': {}})
 ```
+
+---
 
 ## API reference
 

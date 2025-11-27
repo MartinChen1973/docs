@@ -2,7 +2,7 @@
 name = "langchain-reference-docs"
 version = "0.1.0"
 description = "LangChain API reference documentation"
-requires-python = ">=3.13.0,<4.0.0"
+requires-python = ">=3.13.0,<3.14.0"
 readme = "README.md"
 license = "MIT"
 dependencies = [
@@ -22,6 +22,7 @@ dependencies = [
     # I copied them over because they were in LangGraph's
     # Not sure if each were used/apply to this project
     "griffe-warnings-deprecated>=1.1.0,<2.0.0",
+    "griffe-inherited-docstrings>=1.1.2,<2.0.0",
     # Python
     "mkdocstrings-python>=1.7.0,<2.0.0",
     # Format / Lint
@@ -30,16 +31,18 @@ dependencies = [
     #"langchain-cli",
     "langchain-core",
     "langchain",
-    #"langchain-tests",
-    #"langchain-text-splitters",
+    "langchain-classic",
+    "langchain-tests",
+    #"langchain-model-profiles",
+    "langchain-text-splitters",
     "langchain-anthropic",
     "langchain-chroma",
     "langchain-deepseek",
     "langchain-exa",
     "langchain-fireworks",
     "langchain-groq",
-    #"langchain-huggingface",
-    #"langchain-mistralai",
+    "langchain-huggingface",
+    "langchain-mistralai",
     "langchain-nomic",
     "langchain-ollama",
     "langchain-openai",
@@ -48,35 +51,36 @@ dependencies = [
     "langchain-qdrant",
     "langchain-xai",
     #"langchain-experimental",
-    #"langchain-community",
+    "langchain-community",
     "langchain-mcp-adapters",
     "langchain-astradb",
     #"langchain-ai21",
     "langchain-aws",
-    #"langchain-azure-ai",
+    "langchain-azure-ai",
     #"langchain-azure-dynamic-sessions",
-    #"langchain-cerebras",
-    #"langchain-cohere",
-    #"langchain-db2",
+    "langchain-azure-storage",
+    "langchain-cerebras",
+    "langchain-cohere",
+    "langchain-db2",
     #"langchain-elasticsearch",
     "langchain-google-community",
     "langchain-google-genai",
     "langchain-google-vertexai",
-    #"langchain-ibm",
-    #"langchain-milvus",
-    "langchain-mongodb",
-    #"langchain-neo4j",
-    #"langchain-nvidia-ai-endpoints",
-    #"langchain-pinecone",
+    "langchain-ibm",
+    "langchain-milvus",
+    "langchain-neo4j",
+    "langchain-nvidia-ai-endpoints",
+    "langchain-parallel",
+    "langchain-pinecone",
     #"langchain-postgres",
-    #"langchain-redis",
+    "langchain-redis",
     #"langchain-sema4",
     #"langchain-snowflake",
     #"langchain-sqlserver",
     #"langchain-together",
     #"langchain-unstructured",
-    #"langchain-upstage",
-    #"langchain-weaviate",
+    "langchain-upstage",
+    "langchain-weaviate",
     "langchain-tavily",
     "langgraph",
     "langgraph-prebuilt",
@@ -84,16 +88,29 @@ dependencies = [
     "langgraph-checkpoint-sqlite",
     "langgraph-checkpoint-postgres",
     "langgraph-sdk",
-    #"langgraph-supervisor",
+    "langgraph-supervisor",
     #"langgraph-swarm",
-    #"langgraph-checkpoint-aws",
+    "langgraph-checkpoint-aws",
+    "langsmith",
+    "deepagents"
 ]
 
 
 [tool.uv]
 package = false
+environments = ["platform_python_implementation != 'PyPy'"]
 override-dependencies = [
     "pytest-codspeed>=3.1.0,<4.0.0",
+    # Override git URL sources from langchain-azure-ai and other packages
+    # to use local editable installs instead
+    "langchain>=1.0.0,<2.0.0",
+    "langchain-core>=1.0.0,<2.0.0",
+    # Override openai version to resolve conflict between langchain-fireworks (needs >=2.0.0)
+    # and langchain-parallel (needs <2.0.0)
+    "openai>=2.0.0,<3.0.0",
+    # Override httpx version to resolve conflict between langchain-google-vertexai (needs >=0.28.0)
+    # and langchain-parallel (needs <0.28.0)
+    "httpx>=0.28.0,<1.0.0",
 ]
 
 [tool.uv.sources]
@@ -118,7 +135,9 @@ override-dependencies = [
 langchain-cli = { path = "../../../langchain/libs/cli", editable = true }
 langchain-core = { path = "../../../langchain/libs/core", editable = true }
 langchain = { path = "../../../langchain/libs/langchain_v1", editable = true }
+langchain-classic = { path = "../../../langchain/libs/langchain", editable = true }
 langchain-tests = { path = "../../../langchain/libs/standard-tests", editable = true }
+#langchain-model-profiles = { path = "../../../langchain/libs/model-profiles", editable = true }
 langchain-text-splitters = { path = "../../../langchain/libs/text-splitters", editable = true }
 
 ### Partners
@@ -139,7 +158,7 @@ langchain-qdrant = { path = "../../../langchain/libs/partners/qdrant", editable 
 langchain-xai = { path = "../../../langchain/libs/partners/xai", editable = true }
 
 ## Experimental
-langchain-experimental = { path = "../../../langchain-experimental/libs/experimental", editable = true }
+#langchain-experimental = { path = "../../../langchain-experimental/libs/experimental", editable = true }
 
 ## Community
 langchain-community = { path = "../../../langchain-community/libs/community", editable = true }
@@ -153,6 +172,7 @@ langchain-ai21 = { path = "../../../langchain-ai21/libs/ai21", editable = true }
 langchain-aws = { path = "../../../langchain-aws/libs/aws", editable = true }
 langchain-azure-ai = { path = "../../../langchain-azure/libs/azure-ai", editable = true }
 langchain-azure-dynamic-sessions = { path = "../../../langchain-azure/libs/azure-dynamic-sessions", editable = true }
+langchain-azure-storage = { path = "../../../langchain-azure/libs/azure-storage", editable = true }
 langchain-cerebras = { path = "../../../langchain-cerebras/libs/cerebras", editable = true }
 langchain-cohere = { path = "../../../langchain-cohere/libs/cohere", editable = true }
 langchain-db2 = { path = "../../../langchain-ibm/libs/langchain-db2", editable = true }
@@ -162,7 +182,6 @@ langchain-google-genai = { path = "../../../langchain-google/libs/genai", editab
 langchain-google-vertexai = { path = "../../../langchain-google/libs/vertexai", editable = true }
 langchain-ibm = { path = "../../../langchain-ibm/libs/ibm", editable = true }
 langchain-milvus = { path = "../../../langchain-milvus/libs/milvus", editable = true }
-langchain-mongodb = { path = "../../../langchain-mongodb/libs/langchain-mongodb", editable = true }
 langchain-neo4j = { path = "../../../langchain-neo4j/libs/neo4j", editable = true }
 langchain-nvidia-ai-endpoints = { path = "../../../langchain-nvidia/libs/ai-endpoints", editable = true }
 langchain-pinecone = { path = "../../../langchain-pinecone/libs/pinecone", editable = true }
@@ -177,6 +196,7 @@ langchain-upstage = { path = "../../../langchain-upstage/libs/upstage", editable
 langchain-weaviate = { path = "../../../langchain-weaviate/libs/weaviate", editable = true }
 
 ## Non-langchain-ai org packages (alphabetical)
+langchain-parallel = { path = "../../../langchain-parallel", editable = true }
 langchain-tavily = { path = "../../../langchain-tavily", editable = true }
 
 ## LangGraph monorepo packages (alphabetical)
@@ -191,3 +211,9 @@ langgraph-sdk = { path = "../../../langgraph/libs/sdk-py", editable = true }
 langgraph-supervisor = { path = "../../../langgraph-supervisor-py", editable = true }
 langgraph-swarm = { path = "../../../langgraph-swarm-py", editable = true }
 langgraph-checkpoint-aws = { path = "../../../langchain-aws/libs/langgraph-checkpoint-aws", editable = true }
+
+# LangSmith
+langsmith = { path = "../../../langsmith-sdk/python", editable = true }
+
+# Deep Agents
+deepagents = { path = "../../../deepagents/libs/deepagents", editable = true }
